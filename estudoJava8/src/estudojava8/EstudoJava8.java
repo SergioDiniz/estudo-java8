@@ -7,6 +7,8 @@ package estudojava8;
 
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Collections;
+import java.util.Comparator;
 import java.util.List;
 import java.util.function.Consumer;
 import java.util.function.Predicate;
@@ -34,13 +36,50 @@ public class EstudoJava8 {
         usuarios.add(user2);
         usuarios.add(user3);
         
+        
         Consumer<Usuario> mostrador =  u -> System.out.println(u.getNome());
         
         usuarios.forEach(u -> System.out.println(u.getNome()));
         
-        usuarios.removeIf(u -> u.getIdade() < 25);
+//        usuarios.removeIf(u -> u.getIdade() > 25);
         usuarios.forEach(System.out::println);
         
+        
+        System.out.println("------ ORDENAR ------");
+        
+        Collections.sort(usuarios, (u1, u2) -> {
+//            return u1.getNome().compareTo(u2.getNome);
+            return String.CASE_INSENSITIVE_ORDER.compare(u1.getNome(), u2.getNome());
+        });
+        
+        usuarios.forEach(System.out::println);
+        
+        System.out.println("------");
+        
+        usuarios.sort((u1, u2) -> u1.getNome().compareTo(u2.getNome()));
+        usuarios.forEach(System.out::println);
+        
+        System.out.println("------");
+        
+        usuarios.sort(Comparator.comparing(Usuario::getNome));
+        usuarios.forEach(System.out::println);
+        
+        System.out.println("------");
+        
+        usuarios.sort(Comparator.comparingInt(Usuario::getIdade));
+        usuarios.forEach(System.out::println);
+        
+        
+        System.out.println("------");
+        
+        usuarios.sort(Comparator.nullsLast(
+                    Comparator
+                        .comparingInt(Usuario::getIdade)
+                        .thenComparing(Usuario::getNome)
+                    )
+        );
+        
+        usuarios.forEach(System.out::println);
         
     }
     
