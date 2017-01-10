@@ -27,6 +27,11 @@ public class Usuario {
 
     
     
+    public void tornarModerador(){
+        this.setAdmin(true);
+    }
+    
+    
     public String getNome() {
         return nome;
     }

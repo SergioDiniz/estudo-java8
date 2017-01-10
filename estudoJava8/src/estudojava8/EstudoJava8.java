@@ -7,11 +7,14 @@ package estudojava8;
 
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Collection;
 import java.util.Collections;
 import java.util.Comparator;
 import java.util.List;
+import java.util.OptionalDouble;
 import java.util.function.Consumer;
 import java.util.function.Predicate;
+import java.util.stream.Collectors;
 import modelo.Usuario;
 
 /**
@@ -80,6 +83,50 @@ public class EstudoJava8 {
         );
         
         usuarios.forEach(System.out::println);
+        
+        
+        System.out.println("------FILTRANDO------");
+        
+//        usuarios.sort(Comparator.comparingInt(Usuario::getIdade).reversed());
+//        usuarios.subList(0, 2).forEach(Usuario::tornarModerador);
+//        
+//        usuarios.forEach(System.out::println);
+        
+        
+        
+        System.out.println("------");
+        
+        usuarios.stream()
+                .filter((Usuario u) -> {
+                    if(u.getIdade() > 25){
+                        u.tornarModerador();
+                    }
+                    return true;
+                })
+                .collect(Collectors.toList());
+        
+        usuarios.forEach(System.out::println);
+        
+        
+        System.out.println("------");
+        
+        List<Integer> idades = usuarios.stream()
+                      .map(Usuario::getIdade)
+                      .collect(Collectors.toList());
+        
+        idades.forEach(System.out::println);
+        
+        System.out.println("------OPTIONALS------");
+        
+//        OptionalDouble oMediaIdade = usuarios.stream().mapToInt(Usuario::getIdade).average();
+//        double mediaIdade = oMediaIdade.orElse(0.0);
+        double mediaIdade = usuarios
+                .stream()
+                .mapToInt(Usuario::getIdade)
+                .average()
+                .orElse(0.0);
+        
+        System.out.println("Media Idade: " + mediaIdade);
         
     }
     
